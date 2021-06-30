@@ -1,22 +1,13 @@
-import {
-  Rule,
-  SchematicContext,
-  SchematicsException,
-  Tree,
-  chain,
-} from '@angular-devkit/schematics';
-import {
-  NodePackageInstallTask,
-  RunSchematicTask,
-} from '@angular-devkit/schematics/tasks';
+import { chain, Rule, SchematicContext, SchematicsException, Tree, } from '@angular-devkit/schematics';
+import { NodePackageInstallTask, RunSchematicTask, } from '@angular-devkit/schematics/tasks';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
-import { ScriptTarget, SourceFile, createSourceFile } from 'typescript';
+import { createSourceFile, ScriptTarget, SourceFile } from 'typescript';
 
 import { insertImport, isImported } from '../utils/devkit-utils/ast-utils';
 import { InsertChange } from '../utils/devkit-utils/change';
 import { getPackageManager } from '../utils/getPackageManager';
 
-import { addPackageToPackageJson } from './../utils/package';
+import { addPackageToPackageJson } from '../utils/package';
 import { Schema as CapAddOptions } from './schema';
 
 function addCapacitorToPackageJson(): Rule {
@@ -38,9 +29,7 @@ function getTsSourceFile(host: Tree, path: string): SourceFile {
     throw new SchematicsException(`Could not read file (${path}).`);
   }
   const content = buffer.toString();
-  const source = createSourceFile(path, content, ScriptTarget.Latest, true);
-
-  return source;
+  return createSourceFile(path, content, ScriptTarget.Latest, true);
 }
 
 function addCapPluginsToAppComponent(projectSourceRoot: string): Rule {
@@ -81,7 +70,6 @@ function capInit(projectName: string, npmTool: string, webDir: string): Rule {
           'cap',
           'init',
           projectName,
-          '--npm-client',
           npmTool,
           '--web-dir',
           webDir,
